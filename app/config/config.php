@@ -10,10 +10,10 @@ defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
 return new \Phalcon\Config([
     'database' => [
         'adapter'     => 'Mysql',
-        'host'        => 'localhost',
-        'username'    => 'root',
-        'password'    => 'jmbg1977',
-        'dbname'      => 'pointerapp',
+        'host'        => 'remotemysql.com',
+        'username'    => 'xGFTTKOdxu',
+        'password'    => 'qiey26GcaO',
+        'dbname'      => 'xGFTTKOdxu',
         'charset'     => 'utf8',
         'port'        => 3306
     ],
