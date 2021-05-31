@@ -9,7 +9,7 @@
     ],
   "require": {
     "php": "^7.4.0",
-    "psr": "^1.0",
+    "ext-psr": "*",
     "phalcon/cphalcon": "^4.0"
   }
 }
