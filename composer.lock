@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72907a5705f7fd8ce6cd57e33bedbfda",
+    "content-hash": "0ee9def899a9e23403e2f836f2c68a26",
     "packages": [
         {
             "name": "phalcon/cphalcon",
@@ -119,7 +119,11 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.4.0",
-        "ext-psr": "*"
+        "ext-psr": "*",
+        "ext-mbstring": "*",
+        "ext-json": "*",
+        "ext-curl": "*",
+        "ext-gettext": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
