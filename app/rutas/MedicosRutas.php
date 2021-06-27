@@ -176,7 +176,7 @@ class MedicosRutas extends \Phalcon\Mvc\Router\Group
       'action'     => 'servicioGuardar',
     ]);
 
-    $this->addGet('/consultas/paciente/{id}/limite/{limite}', [
+    $this->addGet('/consultas/paciente/{id}/limite/{limite}/consulta/{consulta}', [
       'controller' => $controlador,
       'action'     => 'historialPaciente',
     ]);

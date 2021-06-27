@@ -764,9 +764,10 @@ class MedicosController extends ControllerBase  {
   public function historialPacienteAction() {
     $this->view->disable();
     $id = $this->dispatcher->getParam('id');
+    $conId = $this->dispatcher->getParam('consulta');
     $limite = $this->dispatcher->getParam('limite');
     $res = Consultas::find([
-      'conditions' => 'paciente_id = '. $id . ' AND estado = 3',
+      'conditions' => 'paciente_id = '. $id . ' AND estado = 3 AND id != ' . $conId,
       'order' => 'fecha DESC',
       'limit' => $limite
     ]);
