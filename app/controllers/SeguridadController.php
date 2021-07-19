@@ -98,7 +98,7 @@ class SeguridadController extends ControllerBase
                     $this->response->setStatusCode(200, 'Ok');
                 } else {
                     $res = 'Los datos no se pudieron actualizar ';
-                    foreach ($mov->getMessages() as $m) {
+                    foreach ($usr->getMessages() as $m) {
                         $res .= $m . "\n";
                     }
                     $this->response->setStatusCode(406, 'Error');
@@ -110,7 +110,7 @@ class SeguridadController extends ControllerBase
                     $this->response->setStatusCode(200, 'Ok');
                 } else {
                     $res = 'Los datos no se pudieron actualizar ';
-                    foreach ($mov->getMessages() as $m) {
+                    foreach ($usr->getMessages() as $m) {
                         $res .= $m . "\n";
                     }
                     $this->response->setStatusCode(406, 'Error');

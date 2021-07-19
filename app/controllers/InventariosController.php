@@ -538,7 +538,7 @@ class InventariosController extends ControllerBase  {
         $msj = "Se actualizo";
       } else {
         $msj = "No se pudo crear el nuevo kardex: " . "\n";
-        foreach ($mov->getMessages() as $m) {
+        foreach ($kdx->getMessages() as $m) {
           $msj .= $m . "\n";
         }
       }
@@ -555,7 +555,7 @@ class InventariosController extends ControllerBase  {
         $msj = "Todo bien";
       } else {
         $msj = "No se pudo crear el nuevo kardex: " . "\n";
-        foreach ($mov->getMessages() as $m) {
+        foreach ($kdxn->getMessages() as $m) {
           $msj .= $m . "\n";
         }
       }

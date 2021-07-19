@@ -43,14 +43,18 @@ class VentasController extends ControllerBase  {
       $condicion .= 'numero = ' . $filtro;
     }
 
-    if (strlen($condicion) > 0) {
-      $condicion .= ' AND ';
-      $condicion .= 'estado = 0';
-      $res = Ventas::find([
-        'conditions' => $condicion,
-        'order' => 'fecha'
-      ]);
+    if ($estado == 0) {
+      // Solo activos
+      if (strlen($condicion) > 0) {
+        $condicion .= ' AND ';
+      }  
+      $condicion .= 'estado != 2';
     }
+    
+    $res = Ventas::find([
+      'conditions' => $condicion,
+      'order' => 'fecha'
+    ]);
 
     if ($res->count() > 0) {
         $this->response->setStatusCode(200, 'Ok ' . $clase);
@@ -134,7 +138,7 @@ class VentasController extends ControllerBase  {
           $this->response->setStatusCode(200, 'Ok');
         } else {
           $msj = "No se puede actualizar los datos: " . "\n";
-          foreach ($mov->getMessages() as $m) {
+          foreach ($ven->getMessages() as $m) {
             $msj .= $m . "\n";
           }
           $ret->res = false;
@@ -263,12 +267,12 @@ class VentasController extends ControllerBase  {
       $kdx = $res[0];
       $kdx->ingresos = $kdx->ingresos + $ing;
       $kdx->egresos = $kdx->egresos + $egr;
-      $kdxn->actualizacion = date('Y-m-d H:i:s');
+      $kdx->actualizacion = date('Y-m-d H:i:s');
       if ($kdx->update()) {
         $msj = "Kardex actualizado";
       } else {
         $msj = "No se pudo actualizarar el kardex: " . "\n";
-        foreach ($mov->getMessages() as $m) {
+        foreach ($kdx->getMessages() as $m) {
           $msj .= $m . "\n";
         }
       }
@@ -285,7 +289,7 @@ class VentasController extends ControllerBase  {
         $msj = "Kardex registrado";
       } else {
         $msj = "No se pudo reistrar el kardex: " . "\n";
-        foreach ($mov->getMessages() as $m) {
+        foreach ($kdx->getMessages() as $m) {
           $msj .= $m . "\n";
         }
       }
