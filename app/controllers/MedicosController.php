@@ -457,6 +457,49 @@ class MedicosController extends ControllerBase  {
     $this->response->send();
   }
 
+  private function pacienteCrear($datos) {
+    $ret = (object) [
+      'res' => false,
+      'cid' => $datos->id,
+      'msj' => 'Los datos no se pudieron procesar'
+    ];
+    $cliret = $this->clienteBuscarCrear($datos->relCliente);
+    if ($cliret->res) {
+      // Crear nuevo paciente
+      $pac = new Pacientes();
+      $pac->id = 0;
+      $pac->cliente_id = $cliret->cid;
+      $pac->foto = '';
+      $pac->fecha_nacimiento = $datos->fecha_nacimiento;
+      $pac->sexo = $datos->sexo;
+      $pac->estado_civil = $datos->estado_civil;
+      $pac->grupo_sanguineo = $datos->grupo_sanguineo;
+      $pac->alergias = '';
+      $pac->antecedentes_familiares = '';
+      $pac->antecedentes_personales = '';
+      $pac->estado = 0;
+      if ($pac->create()) {
+        $ret->res = true;
+        $ret->cid = $pac->id;
+        $ret->msj = "Se registro correctamente el nuevo paciente";
+        $this->response->setStatusCode(201, 'Created');  
+      } else {
+        $msj = "No se pudo crear el nuevo paciente: " . "\n";
+        foreach ($pac->getMessages() as $m) {
+          $msj .= $m . "\n";
+        }
+        $ret->res = false;
+        $ret->cid = 0;
+        $ret->msj = $msj;
+      }
+    } else {
+      $ret->res = false;
+      $ret->cid = 0;
+      $ret->msj = $cliret->msj;
+    }
+    return $ret;
+  }
+
   // MEDICOS
   public function medicosBuscarAction() {
     $this->view->disable();
@@ -913,7 +956,8 @@ class MedicosController extends ControllerBase  {
       $ret = (object) [
         'res' => false,
         'cid' => $datos->id,
-        'msj' => 'Los datos no se pudieron procesar'
+        'msj' => 'Los datos no se pudieron procesar',
+        'num' => 0
       ];
       $this->response->setStatusCode(406, 'Not Acceptable');
       if ($datos->id > 0) {
@@ -994,9 +1038,17 @@ class MedicosController extends ControllerBase  {
           'column' => 'numero',
           'conditions' => "fecha = '" . $datos->fecha . "' AND medico_id = " . $datos->medico_id
         ]) ?? 0;
+        // Crear paciente si no esta creado
+        $pacienteId = $datos->paciente_id;
+        if ($pacienteId <= 0) {
+          $pacRet = $this->pacienteCrear($datos->relPaciente);
+          if ($pacRet->res) {
+            $pacienteId = $pacRet->cid;
+          }
+        }
         $con = new Consultas();
         $con->sucursal_id = $datos->sucursal_id;
-        $con->paciente_id = $datos->paciente_id;
+        $con->paciente_id = $pacienteId;
         $con->medico_id = $datos->medico_id;
         $con->servicio_id = $datos->servicio_id;
         $con->fecha = $datos->fecha;
@@ -1017,6 +1069,7 @@ class MedicosController extends ControllerBase  {
         if ($con->create()) {
           $ret->res = true;
           $ret->cid = $con->id;
+          $ret->num = $con->numero;
           $ret->msj = "Se registro correctamente la consulta";
           $this->response->setStatusCode(201, 'Created');  
         } else {
