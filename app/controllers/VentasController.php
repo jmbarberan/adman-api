@@ -206,7 +206,7 @@ class VentasController extends ControllerBase  {
             if ($con != false) {
               $con->factura_id = $ven->id;
               if(!$con->update()) {
-                foreach ($ven->getMessages() as $m) {
+                foreach ($con->getMessages() as $m) {
                   $msj .= $m . "\n";
                 }
               }

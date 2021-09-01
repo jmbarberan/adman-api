@@ -1201,6 +1201,9 @@ class MedicosController extends ControllerBase  {
       $con->diagnostico_descripcion = $datos->diagnostico_descripcion;
       $con->tratamiento = $datos->tratamiento;
       $con->examenes = $datos->examenes;
+      $con->proxima = $datos->proxima;
+      $con->laboratorio = $datos->laboratorio;
+      $con->antecedentes = $datos->antecedentes;
       try {
         if($con->update()) {
           $ret->res = true;

@@ -528,12 +528,12 @@ class InventariosController extends ControllerBase  {
     }
     $date = date('Y-m-d H:i:s');
 
-    $msj = "No se proceso";
+    $msj = "No se procesó";
     if ($res->count() > 0) {
       $kdx = $res[0];
       $kdx->ingresos = $kdx->ingresos + $ing;
       $kdx->egresos = $kdx->egresos + $egr;
-      $kdxn->actualizacion = date('Y-m-d H:i:s');
+      $kdx->actualizacion = date('Y-m-d H:i:s');
       if ($kdx->update()) {
         $msj = "Se actualizo";
       } else {
